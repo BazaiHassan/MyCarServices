@@ -1,3 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">My Car Services</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_add_service">Add Service</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">My Cars</string>
+    <string name="home_no_cars">No cars added yet</string>
+    <string name="home_add_car">Add Your Car</string>
+    <string name="home_next_service">Next Service</string>
+    <string name="home_last_service">Last Service</string>
+    <string name="home_mileage">Mileage</string>
+    <string name="home_due_soon">Due Soon</string>
+    <string name="home_overdue">Overdue</string>
+    <string name="home_ok">OK</string>
+
+    <!-- Service Types -->
+    <string name="service_oil_change">Oil Change</string>
+    <string name="service_tire_rotation">Tire Rotation</string>
+    <string name="service_brake_check">Brake Check</string>
+    <string name="service_air_filter">Air Filter</string>
+    <string name="service_custom">Custom Service</string>
+
+    <!-- Add Service Screen -->
+    <string name="add_service_title">Add Service</string>
+    <string name="edit_service_title">Edit Service</string>
+    <string name="add_car_title">Add Car</string>
+    <string name="field_car_name">Car Name</string>
+    <string name="field_car_model">Model</string>
+    <string name="field_car_year">Year</string>
+    <string name="field_license_plate">License Plate</string>
+    <string name="field_current_mileage">Current Mileage (km)</string>
+    <string name="field_service_type">Service Type</string>
+    <string name="field_service_date">Service Date</string>
+    <string name="field_mileage_at_service">Mileage at Service (km)</string>
+    <string name="field_next_service_mileage">Next Service Mileage (km)</string>
+    <string name="field_next_service_date">Next Service Date</string>
+    <string name="field_cost">Cost (€)</string>
+    <string name="field_notes">Notes</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
+
+    <!-- Reports Screen -->
+    <string name="reports_title">Service History</string>
+    <string name="reports_no_records">No service records yet</string>
+    <string name="reports_total_cost">Total Cost</string>
+    <string name="reports_total_services">Total Services</string>
+    <string name="reports_filter_all">All</string>
+    <string name="reports_filter_oil">Oil</string>
+    <string name="reports_filter_tires">Tires</string>
+    <string name="reports_filter_brakes">Brakes</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_de">Deutsch</string>
+    <string name="settings_language_fa">فارسی</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notify_enabled">Enable Reminders</string>
+    <string name="settings_notify_days_before">Notify days before due</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version 1.0.0</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Service Due Soon!</string>
+    <string name="notification_body">%1$s needs %2$s service</string>
+
+    <!-- Errors -->
+    <string name="error_required_field">This field is required</string>
+    <string name="error_invalid_year">Enter a valid year</string>
+    <string name="error_invalid_mileage">Enter a valid mileage</string>
+
+    <!-- New service types -->
+    <string name="service_gearbox_oil">Gearbox Oil Change</string>
+    <string name="service_car_repair">Car Repair</string>
+
+    <!-- New fields -->
+    <string name="field_cause">Cause / Reason</string>
+    <string name="field_provider_name">Service Provider Name</string>
+    <string name="field_provider_phone">Service Provider Phone</string>
+    <string name="field_add_photo">Add Photo</string>
+    <string name="field_change_photo">Change Photo</string>
+    <string name="field_car_photo">Car Photo</string>
+
+    <!-- PDF -->
+    <string name="export_pdf">Export PDF Report</string>
+    <string name="export_pdf_success">PDF saved to Downloads</string>
+    <string name="export_pdf_error">Failed to export PDF</string>
+    <string name="pdf_report_title">Car Service History Report</string>
+    <string name="pdf_generated_on">Generated on</string>
 </resources>

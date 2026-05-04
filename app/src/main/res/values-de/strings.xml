@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meine Autowartung</string>
+
+    <string name="nav_home">Startseite</string>
+    <string name="nav_add_service">Service hinzufügen</string>
+    <string name="nav_reports">Berichte</string>
+    <string name="nav_settings">Einstellungen</string>
+
+    <string name="home_title">Meine Autos</string>
+    <string name="home_no_cars">Noch keine Autos hinzugefügt</string>
+    <string name="home_add_car">Auto hinzufügen</string>
+    <string name="home_next_service">Nächster Service</string>
+    <string name="home_last_service">Letzter Service</string>
+    <string name="home_mileage">Kilometerstand</string>
+    <string name="home_due_soon">Bald fällig</string>
+    <string name="home_overdue">Überfällig</string>
+    <string name="home_ok">OK</string>
+
+    <string name="service_oil_change">Ölwechsel</string>
+    <string name="service_tire_rotation">Reifenwechsel</string>
+    <string name="service_brake_check">Bremsenprüfung</string>
+    <string name="service_air_filter">Luftfilter</string>
+    <string name="service_custom">Benutzerdefiniert</string>
+
+    <string name="add_service_title">Service hinzufügen</string>
+    <string name="edit_service_title">Service bearbeiten</string>
+    <string name="add_car_title">Auto hinzufügen</string>
+    <string name="field_car_name">Autoname</string>
+    <string name="field_car_model">Modell</string>
+    <string name="field_car_year">Baujahr</string>
+    <string name="field_license_plate">Kennzeichen</string>
+    <string name="field_current_mileage">Aktueller Kilometerstand (km)</string>
+    <string name="field_service_type">Servicetyp</string>
+    <string name="field_service_date">Servicedatum</string>
+    <string name="field_mileage_at_service">Kilometerstand beim Service (km)</string>
+    <string name="field_next_service_mileage">Nächster Service Kilometerstand (km)</string>
+    <string name="field_next_service_date">Nächstes Servicedatum</string>
+    <string name="field_cost">Kosten (€)</string>
+    <string name="field_notes">Notizen</string>
+    <string name="btn_save">Speichern</string>
+    <string name="btn_cancel">Abbrechen</string>
+    <string name="btn_delete">Löschen</string>
+
+    <string name="reports_title">Servicehistorie</string>
+    <string name="reports_no_records">Noch keine Serviceeinträge</string>
+    <string name="reports_total_cost">Gesamtkosten</string>
+    <string name="reports_total_services">Gesamtservices</string>
+    <string name="reports_filter_all">Alle</string>
+    <string name="reports_filter_oil">Öl</string>
+    <string name="reports_filter_tires">Reifen</string>
+    <string name="reports_filter_brakes">Bremsen</string>
+
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_language">Sprache</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_language_de">Deutsch</string>
+    <string name="settings_language_fa">فارسی</string>
+    <string name="settings_notifications">Benachrichtigungen</string>
+    <string name="settings_notify_enabled">Erinnerungen aktivieren</string>
+    <string name="settings_notify_days_before">Tage vor Fälligkeit benachrichtigen</string>
+    <string name="settings_about">Über</string>
+    <string name="settings_version">Version 1.0.0</string>
+
+    <string name="notification_title">Service bald fällig!</string>
+    <string name="notification_body">%1$s benötigt %2$s Service</string>
+
+    <string name="error_required_field">Dieses Feld ist erforderlich</string>
+    <string name="error_invalid_year">Gültiges Jahr eingeben</string>
+    <string name="error_invalid_mileage">Gültigen Kilometerstand eingeben</string>
+    <string name="service_gearbox_oil">Getriebeölwechsel</string>
+    <string name="service_car_repair">Autoreparatur</string>
+    <string name="field_cause">Ursache / Grund</string>
+    <string name="field_provider_name">Werkstattname</string>
+    <string name="field_provider_phone">Werkstattnummer</string>
+    <string name="field_add_photo">Foto hinzufügen</string>
+    <string name="field_change_photo">Foto ändern</string>
+    <string name="field_car_photo">Autofoto</string>
+    <string name="export_pdf">PDF-Bericht exportieren</string>
+    <string name="export_pdf_success">PDF in Downloads gespeichert</string>
+    <string name="export_pdf_error">PDF-Export fehlgeschlagen</string>
+    <string name="pdf_report_title">Fahrzeugwartungsbericht</string>
+    <string name="pdf_generated_on">Erstellt am</string>
+</resources>
