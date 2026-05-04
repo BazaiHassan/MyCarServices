@@ -18,10 +18,11 @@
     <string name="home_ok">تأیید</string>
 
     <string name="service_oil_change">تعویض روغن</string>
-    <string name="service_tire_rotation">چرخش لاستیک</string>
+    <string name="service_tire_rotation">تعویض لاستیک</string>
     <string name="service_brake_check">بررسی ترمز</string>
     <string name="service_air_filter">فیلتر هوا</string>
     <string name="service_custom">سرویس دلخواه</string>
+    <string name="service_timing_belt">تعویض تسمه تایم</string>
 
     <string name="add_service_title">افزودن سرویس</string>
     <string name="edit_service_title">ویرایش سرویس</string>
@@ -81,4 +82,9 @@
     <string name="export_pdf_error">خطا در ایجاد PDF</string>
     <string name="pdf_report_title">گزارش تاریخچه سرویس خودرو</string>
     <string name="pdf_generated_on">تاریخ گزارش</string>
+
+    <string name="delete_car_title">حذف خودرو</string>
+    <string name="delete_car_confirm">این خودرو و تمام سوابق سرویس آن حذف خواهند شد. مطمئنید؟</string>
+    <string name="delete_service_title">حذف سرویس</string>
+    <string name="delete_service_confirm">آیا از حذف این سرویس مطمئنید؟</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -26,6 +25,10 @@ import com.hbazai.mycarservices.ui.theme.PrimaryYellow
 import com.hbazai.mycarservices.viewmodel.ReportViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.unit.dp
+import com.hbazai.mycarservices.ui.theme.StatusOverdue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,7 +75,7 @@ fun ReportsScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, null, tint = PrimaryYellow)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = PrimaryYellow)
                     }
                 },
                 actions = {
@@ -191,7 +194,7 @@ fun ReportsScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(items = services, key = { it.id }) { service ->
-                        ServiceHistoryCard(service = service)
+                        ServiceHistoryCard(service = service, onDeleteService = { viewModel.deleteService(service) })
                     }
                 }
             }
@@ -226,9 +229,35 @@ fun SummaryCard(label: String, value: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ServiceHistoryCard(service: ServiceRecordEntity) {
+fun ServiceHistoryCard(
+    service: ServiceRecordEntity,
+    onDeleteService: () -> Unit       // ADD
+) {
+    var showConfirm by remember { mutableStateOf(false) }
     val dateStr = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         .format(Date(service.serviceDate))
+
+    if (showConfirm) {
+        AlertDialog(
+            onDismissRequest = { showConfirm = false },
+            title = { Text(stringResource(R.string.delete_service_title), color = PrimaryYellow) },
+            text  = { Text(stringResource(R.string.delete_service_confirm)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showConfirm = false
+                    onDeleteService()
+                }) {
+                    Text(stringResource(R.string.btn_delete), color = StatusOverdue)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showConfirm = false }) {
+                    Text(stringResource(R.string.btn_cancel))
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -246,11 +275,25 @@ fun ServiceHistoryCard(service: ServiceRecordEntity) {
                     fontWeight = FontWeight.Bold,
                     color      = PrimaryYellow
                 )
-                Text(
-                    text  = "€ ${"%.2f".format(service.cost)}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text  = "€ ${"%.2f".format(service.cost)}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    IconButton(
+                        onClick  = { showConfirm = true },
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = stringResource(R.string.btn_delete),
+                            tint     = StatusOverdue,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
             }
 
             Spacer(Modifier.height(4.dp))
@@ -264,7 +307,6 @@ fun ServiceHistoryCard(service: ServiceRecordEntity) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-
             if (service.cause.isNotBlank()) {
                 Spacer(Modifier.height(4.dp))
                 Text(

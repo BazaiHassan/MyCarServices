@@ -22,6 +22,7 @@
     <string name="service_brake_check">Bremsenprüfung</string>
     <string name="service_air_filter">Luftfilter</string>
     <string name="service_custom">Benutzerdefiniert</string>
+    <string name="service_timing_belt">Zahnriemenwechsel</string>
 
     <string name="add_service_title">Service hinzufügen</string>
     <string name="edit_service_title">Service bearbeiten</string>
@@ -50,6 +51,7 @@
     <string name="reports_filter_oil">Öl</string>
     <string name="reports_filter_tires">Reifen</string>
     <string name="reports_filter_brakes">Bremsen</string>
+    
 
     <string name="settings_title">Einstellungen</string>
     <string name="settings_language">Sprache</string>
@@ -81,4 +83,9 @@
     <string name="export_pdf_error">PDF-Export fehlgeschlagen</string>
     <string name="pdf_report_title">Fahrzeugwartungsbericht</string>
     <string name="pdf_generated_on">Erstellt am</string>
+
+    <string name="delete_car_title">Auto löschen</string>
+    <string name="delete_car_confirm">Das Auto und alle Serviceeinträge werden gelöscht. Sicher?</string>
+    <string name="delete_service_title">Service löschen</string>
+    <string name="delete_service_confirm">Diesen Serviceeintrag wirklich löschen?</string>
 </resources>

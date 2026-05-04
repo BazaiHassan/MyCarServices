@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import com.hbazai.mycarservices.R
 import com.hbazai.mycarservices.ui.theme.OnPrimary
 import com.hbazai.mycarservices.ui.theme.PrimaryYellow
 import com.hbazai.mycarservices.util.LocaleHelper
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +49,7 @@ fun SettingsScreen(onBack: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, null, tint = PrimaryYellow)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = PrimaryYellow)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

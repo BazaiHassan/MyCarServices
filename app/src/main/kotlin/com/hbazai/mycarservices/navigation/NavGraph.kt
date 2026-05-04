@@ -6,6 +6,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hbazai.mycarservices.screens.*
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+
+val arrowBackIcon
+    @Composable get() = Icons.AutoMirrored.Filled.ArrowBack
+
 sealed class Screen(val route: String) {
     object Splash      : Screen("splash")
     object Home        : Screen("home")

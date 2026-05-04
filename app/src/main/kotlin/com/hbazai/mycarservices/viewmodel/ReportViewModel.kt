@@ -66,5 +66,9 @@ class ReportViewModel @Inject constructor(
         }
     }
 
+    fun deleteService(service: ServiceRecordEntity) {
+      viewModelScope.launch { serviceRepository.deleteService(service) }
+    }
+
     fun clearPdfResult() { _pdfExportResult.value = null }
 }

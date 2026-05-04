@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,6 +29,7 @@ import com.hbazai.mycarservices.ui.theme.OnPrimary
 import com.hbazai.mycarservices.ui.theme.PrimaryYellow
 import com.hbazai.mycarservices.viewmodel.ServiceViewModel
 import com.hbazai.mycarservices.screens.CarTextField
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +43,7 @@ fun AddServiceScreen(
     val serviceTypes = listOf(
         stringResource(R.string.service_oil_change),
         stringResource(R.string.service_gearbox_oil),
+        stringResource(R.string.service_timing_belt),
         stringResource(R.string.service_tire_rotation),
         stringResource(R.string.service_brake_check),
         stringResource(R.string.service_air_filter),
@@ -83,7 +84,7 @@ fun AddServiceScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, null, tint = PrimaryYellow)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = PrimaryYellow)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

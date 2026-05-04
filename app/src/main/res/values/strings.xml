@@ -26,6 +26,7 @@
     <string name="service_brake_check">Brake Check</string>
     <string name="service_air_filter">Air Filter</string>
     <string name="service_custom">Custom Service</string>
+    <string name="service_timing_belt">Timing Belt Change</string>
 
     <!-- Add Service Screen -->
     <string name="add_service_title">Add Service</string>
@@ -96,4 +97,9 @@
     <string name="export_pdf_error">Failed to export PDF</string>
     <string name="pdf_report_title">Car Service History Report</string>
     <string name="pdf_generated_on">Generated on</string>
+
+    <string name="delete_car_title">Delete Car</string>
+    <string name="delete_car_confirm">This will delete the car and all its service records. Are you sure?</string>
+    <string name="delete_service_title">Delete Service</string>
+    <string name="delete_service_confirm">Are you sure you want to delete this service record?</string>
 </resources>
