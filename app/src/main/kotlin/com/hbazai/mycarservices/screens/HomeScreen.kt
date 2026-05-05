@@ -227,19 +227,6 @@ fun CarCard(
                     Spacer(Modifier.width(2.dp))
                     Text(stringResource(R.string.btn_edit))
                 }
-                // Box(
-                //     modifier = Modifier
-                //         .clip(RoundedCornerShape(20.dp))
-                //         .background(statusColor.copy(alpha = 0.15f))
-                //         .padding(horizontal = 12.dp, vertical = 4.dp)
-                // ) {
-                //     Text(
-                //         statusText,
-                //         color      = statusColor,
-                //         style      = MaterialTheme.typography.labelLarge,
-                //         fontWeight = FontWeight.Bold
-                //     )
-                // }
             }
 
             Spacer(Modifier.height(12.dp))

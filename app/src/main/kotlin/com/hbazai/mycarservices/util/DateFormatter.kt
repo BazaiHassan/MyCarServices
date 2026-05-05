@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateFormatter {
+
     fun format(context: Context, epochMillis: Long): String {
-        val lang = LocaleHelper.getSavedLanguage(context)
-        return if (lang == "fa") {
+        return if (LocaleHelper.getSavedLanguage(context) == "fa") {
             JalaliCalendar.format(epochMillis)
         } else {
             SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date(epochMillis))
@@ -15,9 +15,8 @@ object DateFormatter {
     }
 
     fun formatShort(context: Context, epochMillis: Long): String {
-        val lang = LocaleHelper.getSavedLanguage(context)
-        return if (lang == "fa") {
-            JalaliCalendar.format(epochMillis)
+        return if (LocaleHelper.getSavedLanguage(context) == "fa") {
+            JalaliCalendar.formatShort(epochMillis)
         } else {
             SimpleDateFormat("dd MMM yy", Locale.getDefault()).format(Date(epochMillis))
         }
