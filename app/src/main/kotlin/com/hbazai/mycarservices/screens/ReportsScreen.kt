@@ -140,7 +140,7 @@ fun ReportsScreen(
                 )
                 SummaryCard(
                     label    = stringResource(R.string.reports_total_cost),
-                    value    = "$currency ${"%.2f".format(totalCost)}",
+                    value    = AppPreferences.formatCost(context, totalCost),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -272,7 +272,7 @@ fun ServiceHistoryCard(
             Spacer(Modifier.height(6.dp))
             Text("$dateStr · ${service.mileageAtService} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text("Next: $nextDateStr · ${service.nextServiceMileage} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("$currency ${"%.2f".format(service.cost)}", style = MaterialTheme.typography.bodySmall, color = PrimaryYellow, fontWeight = FontWeight.SemiBold)
+            Text(AppPreferences.formatCost(context, service.cost), style = MaterialTheme.typography.bodySmall, color = PrimaryYellow, fontWeight = FontWeight.SemiBold)
 
             if (service.cause.isNotBlank()) {
                 Spacer(Modifier.height(4.dp))

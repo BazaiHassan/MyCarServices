@@ -137,7 +137,7 @@ object PdfExporter {
                     "Date"          to dateFormat.format(Date(service.serviceDate)),
                     "Mileage"       to "${service.mileageAtService} km",
                     "Next Service"  to "${service.nextServiceMileage} km / ${dateFormat.format(Date(service.nextServiceDate))}",
-                    "Cost"          to "€ ${"%.2f".format(service.cost)}"
+                    "Cost"          to AppPreferences.formatCost(context, service.cost)
                 ).forEach { (label, value) ->
                     canvas.drawText("$label: $value", MARGIN + 8f, yPosition, bodyPaint)
                     yPosition += 16f

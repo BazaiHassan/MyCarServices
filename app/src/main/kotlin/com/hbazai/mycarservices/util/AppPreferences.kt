@@ -31,4 +31,21 @@ object AppPreferences {
     fun saveDistanceUnit(context: Context, unit: String) =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             .edit().putString(KEY_DISTANCE, unit).apply()
+
+    fun formatCost(context: Context, amount: Double): String {
+        val currency = getCurrency(context)
+        
+        // Currencies that don't use decimals
+        val noDecimalCurrencies = listOf("﷼", "تومان")
+        
+        return if (currency in noDecimalCurrencies) {
+            // Round to Int, format with thousands separator
+            val formatted = String.format("%,d", amount.toLong())
+            "$formatted $currency"
+        } else {
+            // Keep 2 decimals, format with thousands separator
+            val formatted = String.format("%,.2f", amount)
+            "$currency $formatted"
+        }
+    }
 }

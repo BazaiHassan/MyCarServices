@@ -257,7 +257,7 @@ fun AddServiceScreen(
                             )
                             if (isChecked && price != null) {
                                 Text(
-                                    text  = "$currency ${"%.2f".format(price)}",
+                                    text  = AppPreferences.formatCost(context, price),
                                     color = PrimaryYellow,
                                     style = MaterialTheme.typography.bodySmall,
                                     fontWeight = FontWeight.Bold
