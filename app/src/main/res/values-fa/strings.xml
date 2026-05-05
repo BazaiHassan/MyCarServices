@@ -87,4 +87,7 @@
     <string name="delete_car_confirm">این خودرو و تمام سوابق سرویس آن حذف خواهند شد. مطمئنید؟</string>
     <string name="delete_service_title">حذف سرویس</string>
     <string name="delete_service_confirm">آیا از حذف این سرویس مطمئنید؟</string>
+
+    <string name="btn_edit">ویرایش</string>
+    <string name="edit_car_title">ویرایش خودرو</string>
 </resources>

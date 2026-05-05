@@ -20,7 +20,7 @@ class ReportViewModel @Inject constructor(
     private val carRepository: CarRepository
 ) : ViewModel() {
 
-    private val _activeFilter = MutableStateFlow("All")
+    private val _activeFilter  = MutableStateFlow("All")
     val activeFilter: StateFlow<String> = _activeFilter
 
     private val _selectedCarId = MutableStateFlow<Int?>(null)
@@ -33,41 +33,37 @@ class ReportViewModel @Inject constructor(
         serviceRepository.getAllServices()
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    // Services for selected car only — used to build dynamic filter chips
+    val allServicesForCar: StateFlow<List<ServiceRecordEntity>> =
+        combine(_allServices, _selectedCarId) { services, carId ->
+            if (carId != null) services.filter { it.carId == carId } else services
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val filteredServices: StateFlow<List<ServiceRecordEntity>> =
         combine(_allServices, _activeFilter, _selectedCarId) { services, filter, carId ->
             var result = if (carId != null) services.filter { it.carId == carId } else services
-            result = when (filter) {
-                "Oil",    "Öl",              "روغن"   -> result.filter { it.serviceType.contains("Oil",    ignoreCase = true) }
-                "Tires",  "Reifen",          "لاستیک" -> result.filter { it.serviceType.contains("Tire",   ignoreCase = true) }
-                "Brakes", "Bremsen",         "ترمز"   -> result.filter { it.serviceType.contains("Brake",  ignoreCase = true) }
-                "Repair", "Reparatur",       "تعمیر"  -> result.filter { it.serviceType.contains("Repair", ignoreCase = true) }
-                "Gearbox","Getriebe",        "گیربکس" -> result.filter { it.serviceType.contains("Gearbox",ignoreCase = true) }
-                else                                   -> result
-            }
+            result = if (filter == "All") result else result.filter { it.serviceType == filter }
             result
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val totalCost: StateFlow<Double> = filteredServices
-        .map { list -> list.sumOf { it.cost } }
+        .map { it.sumOf { s -> s.cost } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
 
     private val _pdfExportResult = MutableStateFlow<File?>(null)
     val pdfExportResult: StateFlow<File?> = _pdfExportResult
 
     fun setFilter(filter: String) { _activeFilter.value = filter }
-
-    fun selectCar(carId: Int?) { _selectedCarId.value = carId }
+    fun selectCar(carId: Int?)   { _selectedCarId.value = carId; _activeFilter.value = "All" }
 
     fun exportPdf(context: Context, car: CarEntity) {
         viewModelScope.launch {
-            val services = filteredServices.value
-            val file     = PdfExporter.exportCarHistory(context, car, services)
-            _pdfExportResult.value = file
+            _pdfExportResult.value = PdfExporter.exportCarHistory(context, car, filteredServices.value)
         }
     }
 
     fun deleteService(service: ServiceRecordEntity) {
-      viewModelScope.launch { serviceRepository.deleteService(service) }
+        viewModelScope.launch { serviceRepository.deleteService(service) }
     }
 
     fun clearPdfResult() { _pdfExportResult.value = null }

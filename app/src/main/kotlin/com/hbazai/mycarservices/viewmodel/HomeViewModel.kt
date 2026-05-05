@@ -28,35 +28,21 @@ class HomeViewModel @Inject constructor(
             cars.collect { carList ->
                 val map = mutableMapOf<Int, ServiceRecordEntity>()
                 carList.forEach { car ->
-                    serviceRepository.getLatestServiceForCar(car.id)?.let {
-                        map[car.id] = it
-                    }
+                    serviceRepository.getLatestServiceForCar(car.id)?.let { map[car.id] = it }
                 }
                 _latestServices.value = map
             }
         }
     }
 
-    fun addCar(
-        name: String,
-        model: String,
-        year: Int,
-        licensePlate: String,
-        mileage: Int,
-        imagePath: String = ""
-    ) {
+    fun addCar(name: String, model: String, year: Int, licensePlate: String, mileage: Int, imagePath: String = "") {
         viewModelScope.launch {
-            carRepository.insertCar(
-                CarEntity(
-                    name           = name,
-                    model          = model,
-                    year           = year,
-                    licensePlate   = licensePlate,
-                    currentMileage = mileage,
-                    imagePath      = imagePath
-                )
-            )
+            carRepository.insertCar(CarEntity(name = name, model = model, year = year, licensePlate = licensePlate, currentMileage = mileage, imagePath = imagePath))
         }
+    }
+
+    fun updateCar(car: CarEntity) {
+        viewModelScope.launch { carRepository.updateCar(car) }
     }
 
     fun deleteCar(car: CarEntity) {

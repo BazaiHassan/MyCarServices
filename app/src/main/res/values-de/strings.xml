@@ -88,4 +88,7 @@
     <string name="delete_car_confirm">Das Auto und alle Serviceeinträge werden gelöscht. Sicher?</string>
     <string name="delete_service_title">Service löschen</string>
     <string name="delete_service_confirm">Diesen Serviceeintrag wirklich löschen?</string>
+
+    <string name="btn_edit">Bearbeiten</string>
+    <string name="edit_car_title">Auto bearbeiten</string>
 </resources>

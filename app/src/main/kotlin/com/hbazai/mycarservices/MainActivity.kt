@@ -1,8 +1,10 @@
 package com.hbazai.mycarservices
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,8 +26,14 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Yellow status bar, dark icons on yellow background
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                scrim         = Color.parseColor("#FFD600"),
+                darkScrim     = Color.parseColor("#FFD600")
+            )
+        )
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             MyCarServicesTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

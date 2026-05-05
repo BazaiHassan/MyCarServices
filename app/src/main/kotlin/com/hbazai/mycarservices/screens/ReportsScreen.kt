@@ -7,6 +7,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,23 +23,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hbazai.mycarservices.R
 import com.hbazai.mycarservices.data.local.entity.ServiceRecordEntity
-import com.hbazai.mycarservices.ui.theme.OnPrimary
-import com.hbazai.mycarservices.ui.theme.PrimaryYellow
+import com.hbazai.mycarservices.ui.theme.*
+import com.hbazai.mycarservices.util.AppPreferences
+import com.hbazai.mycarservices.util.DateFormatter
 import com.hbazai.mycarservices.viewmodel.ReportViewModel
-import java.text.SimpleDateFormat
-import java.util.*
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.ui.unit.dp
-import com.hbazai.mycarservices.ui.theme.StatusOverdue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReportsScreen(
+    initialCarId: Int?,
     onBack: () -> Unit,
+    onEditService: (Int) -> Unit,
     viewModel: ReportViewModel = hiltViewModel()
 ) {
     val context       = LocalContext.current
+    val currency      = AppPreferences.getCurrency(context)
+    val distanceUnit  = AppPreferences.getDistanceUnit(context)
+
     val services      by viewModel.filteredServices.collectAsStateWithLifecycle()
     val totalCost     by viewModel.totalCost.collectAsStateWithLifecycle()
     val filter        by viewModel.activeFilter.collectAsStateWithLifecycle()
@@ -44,34 +47,29 @@ fun ReportsScreen(
     val selectedCarId by viewModel.selectedCarId.collectAsStateWithLifecycle()
     val pdfResult     by viewModel.pdfExportResult.collectAsStateWithLifecycle()
 
-    // Show toast when PDF is done
+    // Pre-select car if navigated from car card
+    LaunchedEffect(initialCarId) {
+        if (initialCarId != null) viewModel.selectCar(initialCarId)
+    }
+
     LaunchedEffect(pdfResult) {
         pdfResult?.let {
-            Toast.makeText(
-                context,
-                context.getString(R.string.export_pdf_success),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(context, context.getString(R.string.export_pdf_success), Toast.LENGTH_LONG).show()
             viewModel.clearPdfResult()
         }
     }
 
-    val filters = listOf(
-        stringResource(R.string.reports_filter_all),
-        stringResource(R.string.reports_filter_oil),
-        stringResource(R.string.reports_filter_tires),
-        stringResource(R.string.reports_filter_brakes)
-    )
+    // Dynamic categories from actual service records
+    val allServices   by viewModel.allServicesForCar.collectAsStateWithLifecycle()
+    val dynamicFilters = remember(allServices) {
+        listOf("All") + allServices.map { it.serviceType }.distinct()
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        stringResource(R.string.reports_title),
-                        fontWeight = FontWeight.Bold,
-                        color      = PrimaryYellow
-                    )
+                    Text(stringResource(R.string.reports_title), fontWeight = FontWeight.Bold, color = PrimaryYellow)
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
@@ -79,17 +77,12 @@ fun ReportsScreen(
                     }
                 },
                 actions = {
-                    // PDF export — only show when a car is selected
                     if (selectedCarId != null) {
                         IconButton(onClick = {
                             val car = cars.find { it.id == selectedCarId }
                             if (car != null) viewModel.exportPdf(context, car)
                         }) {
-                            Icon(
-                                Icons.Default.PictureAsPdf,
-                                contentDescription = stringResource(R.string.export_pdf),
-                                tint = PrimaryYellow
-                            )
+                            Icon(Icons.Default.PictureAsPdf, null, tint = PrimaryYellow)
                         }
                     }
                 },
@@ -102,11 +95,9 @@ fun ReportsScreen(
     ) { padding ->
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
+            modifier = Modifier.fillMaxSize().padding(padding)
         ) {
-            // ── Car selector chips ────────────────────
+            // ── Car selector ──────────────────────────
             if (cars.isNotEmpty()) {
                 LazyRow(
                     contentPadding        = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -139,9 +130,7 @@ fun ReportsScreen(
 
             // ── Summary cards ─────────────────────────
             Row(
-                modifier              = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                modifier              = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 SummaryCard(
@@ -151,19 +140,19 @@ fun ReportsScreen(
                 )
                 SummaryCard(
                     label    = stringResource(R.string.reports_total_cost),
-                    value    = "€ ${"%.2f".format(totalCost)}",
+                    value    = "$currency ${"%.2f".format(totalCost)}",
                     modifier = Modifier.weight(1f)
                 )
             }
 
             Spacer(Modifier.height(8.dp))
 
-            // ── Filter chips ──────────────────────────
+            // ── Dynamic filter chips ──────────────────
             LazyRow(
                 contentPadding        = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(filters) { f ->
+                items(dynamicFilters) { f ->
                     FilterChip(
                         selected = filter == f,
                         onClick  = { viewModel.setFilter(f) },
@@ -179,14 +168,8 @@ fun ReportsScreen(
             Spacer(Modifier.height(8.dp))
 
             if (services.isEmpty()) {
-                Box(
-                    modifier         = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        stringResource(R.string.reports_no_records),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(stringResource(R.string.reports_no_records), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else {
                 LazyColumn(
@@ -194,7 +177,13 @@ fun ReportsScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(items = services, key = { it.id }) { service ->
-                        ServiceHistoryCard(service = service, onDeleteService = { viewModel.deleteService(service) })
+                        ServiceHistoryCard(
+                            service         = service,
+                            currency        = currency,
+                            distanceUnit    = distanceUnit,
+                            onDeleteService = { viewModel.deleteService(service) },
+                            onEditService   = { onEditService(service.id) }
+                        )
                     }
                 }
             }
@@ -213,17 +202,8 @@ fun SummaryCard(label: String, value: String, modifier: Modifier = Modifier) {
             modifier            = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text       = value,
-                style      = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color      = PrimaryYellow
-            )
-            Text(
-                text  = label,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = PrimaryYellow)
+            Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -231,22 +211,24 @@ fun SummaryCard(label: String, value: String, modifier: Modifier = Modifier) {
 @Composable
 fun ServiceHistoryCard(
     service: ServiceRecordEntity,
-    onDeleteService: () -> Unit       // ADD
+    currency: String,
+    distanceUnit: String,
+    onDeleteService: () -> Unit,
+    onEditService: () -> Unit
 ) {
+    val context     = LocalContext.current
     var showConfirm by remember { mutableStateOf(false) }
-    val dateStr = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        .format(Date(service.serviceDate))
+    val dateStr     = DateFormatter.format(context, service.serviceDate)
+    val nextDateStr = DateFormatter.format(context, service.nextServiceDate)
 
     if (showConfirm) {
         AlertDialog(
             onDismissRequest = { showConfirm = false },
+            containerColor   = MaterialTheme.colorScheme.surface,
             title = { Text(stringResource(R.string.delete_service_title), color = PrimaryYellow) },
             text  = { Text(stringResource(R.string.delete_service_confirm)) },
             confirmButton = {
-                TextButton(onClick = {
-                    showConfirm = false
-                    onDeleteService()
-                }) {
+                TextButton(onClick = { showConfirm = false; onDeleteService() }) {
                     Text(stringResource(R.string.btn_delete), color = StatusOverdue)
                 }
             },
@@ -254,8 +236,7 @@ fun ServiceHistoryCard(
                 TextButton(onClick = { showConfirm = false }) {
                     Text(stringResource(R.string.btn_cancel))
                 }
-            },
-            containerColor = MaterialTheme.colorScheme.surface
+            }
         )
     }
 
@@ -265,69 +246,46 @@ fun ServiceHistoryCard(
         colors   = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
+
             Row(
                 modifier              = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment     = Alignment.CenterVertically
             ) {
                 Text(
-                    text       = service.serviceType,
+                    service.serviceType,
                     fontWeight = FontWeight.Bold,
-                    color      = PrimaryYellow
+                    color      = PrimaryYellow,
+                    modifier   = Modifier.weight(1f)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text  = "€ ${"%.2f".format(service.cost)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(Modifier.width(8.dp))
-                    IconButton(
-                        onClick  = { showConfirm = true },
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.btn_delete),
-                            tint     = StatusOverdue,
-                            modifier = Modifier.size(18.dp)
-                        )
+                Row {
+                    IconButton(onClick = onEditService, modifier = Modifier.size(28.dp)) {
+                        Icon(Icons.Default.Edit, null, tint = PrimaryYellow, modifier = Modifier.size(16.dp))
+                    }
+                    Spacer(Modifier.width(4.dp))
+                    IconButton(onClick = { showConfirm = true }, modifier = Modifier.size(28.dp)) {
+                        Icon(Icons.Default.Delete, null, tint = StatusOverdue, modifier = Modifier.size(16.dp))
                     }
                 }
             }
 
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text  = dateStr,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text  = "${service.mileageAtService} km",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Spacer(Modifier.height(6.dp))
+            Text("$dateStr · ${service.mileageAtService} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Next: $nextDateStr · ${service.nextServiceMileage} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("$currency ${"%.2f".format(service.cost)}", style = MaterialTheme.typography.bodySmall, color = PrimaryYellow, fontWeight = FontWeight.SemiBold)
+
             if (service.cause.isNotBlank()) {
                 Spacer(Modifier.height(4.dp))
-                Text(
-                    text  = "⚠ ${service.cause}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error
-                )
+                Text("⚠ ${service.cause}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
             }
             if (service.providerName.isNotBlank()) {
-                Text(
-                    text  = "🔧 ${service.providerName}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Text("🔧 ${service.providerName}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (service.providerPhone.isNotBlank()) {
+                Text("📞 ${service.providerPhone}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             if (service.notes.isNotBlank()) {
-                Text(
-                    text  = service.notes,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Text(service.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }

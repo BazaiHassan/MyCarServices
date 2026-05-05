@@ -19,10 +19,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
     }
-
+    signingConfigs {
+        create("release") {
+            storeFile     = file("/home/hbazai/AndroidStudioProjects/AndroidKeys/mycarservices.keystore")
+            storePassword = "Bazai@up@1988"
+            keyAlias      = "mycarservices"
+            keyPassword   = "Bazai@up@1988"
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = true
+            signingConfig   = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
