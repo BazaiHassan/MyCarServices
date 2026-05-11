@@ -28,62 +28,65 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
     }
 
     Box(
-        modifier         = Modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
+
         Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 32.dp, vertical = 48.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier            = Modifier.padding(horizontal = 32.dp)
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-            // ── Logo ──────────────────────────────────
-            Box(
-                modifier = Modifier
-                    .size(130.dp)
-                    .background(color = PrimaryYellow, shape = CircleShape),
-                contentAlignment = Alignment.Center
+            Spacer(modifier = Modifier.height(1.dp))
+
+            // ── Center Content ────────────────────────
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
+
+                // ── Logo ──────────────────────────────
                 Box(
                     modifier = Modifier
-                        .size(110.dp)
-                        .background(color = Color.White, shape = CircleShape),
+                        .size(120.dp)
+                        .background(color = PrimaryYellow, shape = CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter            = painterResource(id = R.drawable.icon),
+                        painter = painterResource(id = R.drawable.icon),
                         contentDescription = "App Logo",
-                        modifier           = Modifier.size(75.dp)
+                        modifier = Modifier.size(70.dp)
                     )
                 }
+
+                // ── App Name ─────────────────────────
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                // ── Tagline ──────────────────────────
+                Text(
+                    text = "Track · Maintain · Drive Safe",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
             }
 
-            Spacer(Modifier.height(8.dp))
-
-            // ── App name ──────────────────────────────
+            // ── Footer ──────────────────────────────
             Text(
-                text       = stringResource(R.string.app_name),
-                style      = MaterialTheme.typography.headlineMedium,
-                color      = PrimaryYellow,
-                fontWeight = FontWeight.Bold,
-                textAlign  = TextAlign.Center
-            )
-
-            // ── Tagline ───────────────────────────────
-            Text(
-                text      = "Track · Maintain · Drive Safe",
-                style     = MaterialTheme.typography.bodyMedium,
-                color     = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
-            )
-
-            // ── Credit ────────────────────────────────
-            Text(
-                text      = "Made with ❤️ by HBazai",
-                style     = MaterialTheme.typography.bodySmall,
-                color     = MaterialTheme.colorScheme.onSurfaceVariant,
+                text = "Made with ❤️ by HBazai",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
         }
