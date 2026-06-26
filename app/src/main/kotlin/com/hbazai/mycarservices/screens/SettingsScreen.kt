@@ -20,6 +20,8 @@ import com.hbazai.mycarservices.ui.theme.OnPrimary
 import com.hbazai.mycarservices.ui.theme.PrimaryYellow
 import com.hbazai.mycarservices.util.AppPreferences
 import com.hbazai.mycarservices.util.LocaleHelper
+import com.hbazai.mycarservices.util.ThemeMode
+import com.hbazai.mycarservices.util.ThemePreference
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,8 +88,28 @@ fun SettingsScreen(onBack: () -> Unit) {
                 }
             }
 
+            // ── Theme ─────────────────────────────────
+            SettingsSectionLabel(stringResource(R.string.settings_theme))
+            Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+                val themeOptions = listOf(
+                    ThemeMode.SYSTEM to stringResource(R.string.settings_theme_system),
+                    ThemeMode.LIGHT  to stringResource(R.string.settings_theme_light),
+                    ThemeMode.DARK   to stringResource(R.string.settings_theme_dark),
+                )
+                themeOptions.forEach { (mode, label) ->
+                    Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = ThemePreference.mode == mode,
+                            onClick  = { ThemePreference.setMode(context, mode) },
+                            colors = RadioButtonDefaults.colors(selectedColor = PrimaryYellow)
+                        )
+                        Text(label, modifier = Modifier.padding(start = 8.dp), color = MaterialTheme.colorScheme.onSurface)
+                    }
+                }
+            }
+
             // ── Currency ──────────────────────────────
-            SettingsSectionLabel("Currency")
+            SettingsSectionLabel(stringResource(R.string.settings_currency))
             Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 currencies.forEach { c ->
                     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -105,7 +127,7 @@ fun SettingsScreen(onBack: () -> Unit) {
             }
 
             // ── Distance unit ─────────────────────────
-            SettingsSectionLabel("Distance Unit")
+            SettingsSectionLabel(stringResource(R.string.settings_distance))
             Card(shape = RoundedCornerShape(12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 distanceUnits.forEach { d ->
                     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {

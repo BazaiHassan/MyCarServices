@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt.android)
-    kotlin("kapt")                          // ← replaces ksp
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -14,8 +14,8 @@ android {
         applicationId = "com.hbazai.mycarservices"
         minSdk        = 26
         targetSdk     = 36
-        versionCode   = 4
-        versionName   = "1.4.0"
+        versionCode   = 5
+        versionName   = "1.5.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
     }
@@ -44,12 +44,7 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true }
-    
-    // ADD this for kapt
-    kapt {
-        correctErrorTypes = true
-    }
-    
+
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
@@ -68,14 +63,14 @@ dependencies {
     // ── Room ────────────────────────────────────────────────
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)               // ← kapt not ksp
+    ksp(libs.room.compiler)
 
     // ── Hilt ────────────────────────────────────────────────
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)              // ← kapt not ksp
+    ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.work)
-    kapt(libs.hilt.work.compiler)         // ← kapt not ksp
+    ksp(libs.hilt.work.compiler)
 
     // ── WorkManager ─────────────────────────────────────────
     implementation(libs.work.runtime.ktx)

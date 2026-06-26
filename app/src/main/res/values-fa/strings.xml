@@ -61,7 +61,13 @@
     <string name="settings_notify_enabled">فعال‌سازی یادآوری‌ها</string>
     <string name="settings_notify_days_before">روزهای قبل از سررسید</string>
     <string name="settings_about">درباره</string>
-    <string name="settings_version">نسخه ۱.۰.۰</string>
+    <string name="settings_version">نسخه ۱.۵.۰</string>
+    <string name="settings_theme">پوسته</string>
+    <string name="settings_theme_system">مطابق سیستم</string>
+    <string name="settings_theme_light">روشن</string>
+    <string name="settings_theme_dark">تیره</string>
+    <string name="settings_currency">واحد پول</string>
+    <string name="settings_distance">واحد مسافت</string>
 
     <string name="notification_title">سرویس به زودی سررسید می‌شود!</string>
     <string name="notification_body">%1$s نیاز به سرویس %2$s دارد</string>

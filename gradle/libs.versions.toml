@@ -11,6 +11,7 @@ junitExt              = "1.2.1"
 espressoCore          = "3.6.1"
 room                  = "2.7.1"
 hilt                  = "2.56.2"
+ksp                   = "2.1.21-2.0.1"
 hiltWork              = "1.2.0"
 workManager           = "2.10.1"
 lifecycle             = "2.9.0"
@@ -71,3 +72,4 @@ android-application  = { id = "com.android.application",             version.ref
 kotlin-android       = { id = "org.jetbrains.kotlin.android",        version.ref = "kotlin" }
 kotlin-compose       = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt-android  = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp           = { id = "com.google.devtools.ksp", version.ref = "ksp" }
