@@ -57,6 +57,7 @@ fun SetupScreen(onSetupDone: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .navigationBarsPadding()
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -153,7 +154,7 @@ fun SetupScreen(onSetupDone: () -> Unit) {
                 AppPreferences.markSetupDone(context)
                 onSetupDone()
             },
-            modifier = Modifier.fillMaxWidth().height(56.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp).height(56.dp),
             shape    = RoundedCornerShape(16.dp),
             colors   = ButtonDefaults.buttonColors(
                 containerColor = PrimaryYellow,
