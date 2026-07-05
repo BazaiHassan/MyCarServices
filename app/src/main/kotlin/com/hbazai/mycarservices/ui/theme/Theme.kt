@@ -32,12 +32,12 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary          = PrimaryYellow,
-    onPrimary        = OnPrimary,
+    primary          = PrimaryGoldOnLight,
+    onPrimary        = Color.White,
     primaryContainer = PrimaryYellowDark,
     onPrimaryContainer = OnPrimary,
-    secondary        = PrimaryYellowDark,
-    onSecondary      = OnPrimary,
+    secondary        = PrimaryGoldOnLight,
+    onSecondary      = Color.White,
     background       = LightBackground,
     onBackground     = LightOnBackground,
     surface          = LightSurface,

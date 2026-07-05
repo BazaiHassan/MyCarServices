@@ -1,61 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">سرویس خودروی من</string>
+    <string name="splash_tagline">ثبت · نگهداری · رانندگی امن</string>
 
+    <!-- Bottom Nav -->
     <string name="nav_home">خانه</string>
-    <string name="nav_add_service">افزودن سرویس</string>
+    <string name="nav_add_service">ثبت سرویس</string>
     <string name="nav_reports">گزارش‌ها</string>
     <string name="nav_settings">تنظیمات</string>
 
+    <!-- Setup Screen -->
+    <string name="setup_title">راه‌اندازی سریع</string>
+    <string name="setup_subtitle">سه انتخاب سریع — بعداً از تنظیمات قابل تغییر است.</string>
+    <string name="setup_language">زبان</string>
+    <string name="setup_start">شروع کنید</string>
+
+    <!-- Home Screen -->
     <string name="home_title">خودروهای من</string>
     <string name="home_no_cars">هنوز خودرویی اضافه نشده</string>
+    <string name="home_no_cars_hint">خودروی خود را اضافه کنید و در چند ثانیه سرویس ثبت کنید</string>
     <string name="home_add_car">افزودن خودرو</string>
     <string name="home_next_service">سرویس بعدی</string>
     <string name="home_last_service">آخرین سرویس</string>
-    <string name="home_mileage">کیلومتر</string>
-    <string name="home_due_soon">به زودی سررسید</string>
-    <string name="home_overdue">تأخیر در سرویس</string>
-    <string name="home_ok">تأیید</string>
+    <string name="home_mileage">کارکرد</string>
+    <string name="home_due_soon">نزدیک سررسید</string>
+    <string name="home_overdue">سررسید گذشته</string>
+    <string name="home_ok">عادی</string>
+    <string name="home_log_service">ثبت سرویس</string>
+    <string name="home_history">تاریخچه</string>
 
+    <!-- Service Types -->
     <string name="service_oil_change">تعویض روغن</string>
     <string name="service_tire_rotation">تعویض لاستیک</string>
     <string name="service_brake_check">بررسی ترمز</string>
     <string name="service_air_filter">فیلتر هوا</string>
     <string name="service_custom">سرویس دلخواه</string>
-    <string name="service_timing_belt">تعویض تسمه تایم</string>
+    <string name="service_timing_belt">تسمه تایم</string>
+    <string name="service_gearbox_oil">روغن گیربکس</string>
+    <string name="service_car_repair">تعمیر خودرو</string>
 
-    <string name="add_service_title">افزودن سرویس</string>
+    <!-- Add Service Screen -->
+    <string name="add_service_title">ثبت سرویس</string>
     <string name="edit_service_title">ویرایش سرویس</string>
+    <string name="add_service_select_hint">یک یا چند سرویس را لمس کنید</string>
+    <string name="selected_services">سرویس‌های انتخاب‌شده</string>
+    <string name="field_cost_optional">هزینه (اختیاری)</string>
+    <string name="more_details">جزئیات بیشتر (اختیاری)</string>
+    <string name="section_provider">تعمیرگاه</string>
+    <string name="error_select_service">حداقل یک سرویس انتخاب کنید</string>
+
+    <!-- Add / Edit Car Screen -->
     <string name="add_car_title">افزودن خودرو</string>
+    <string name="edit_car_title">ویرایش خودرو</string>
     <string name="field_car_name">نام خودرو</string>
-    <string name="field_car_model">مدل</string>
-    <string name="field_car_year">سال ساخت</string>
-    <string name="field_license_plate">پلاک</string>
-    <string name="field_current_mileage">کیلومتر فعلی</string>
+    <string name="field_car_model">مدل (اختیاری)</string>
+    <string name="field_car_year">سال ساخت (اختیاری)</string>
+    <string name="field_license_plate">پلاک (اختیاری)</string>
+    <string name="field_current_mileage">کارکرد فعلی</string>
     <string name="field_service_type">نوع سرویس</string>
     <string name="field_service_date">تاریخ سرویس</string>
-    <string name="field_mileage_at_service">کیلومتر هنگام سرویس</string>
-    <string name="field_next_service_mileage">کیلومتر سرویس بعدی</string>
+    <string name="field_mileage_at_service">کارکرد هنگام سرویس</string>
+    <string name="field_next_service_mileage">کارکرد سرویس بعدی</string>
     <string name="field_next_service_date">تاریخ سرویس بعدی</string>
-    <string name="field_cost">هزینه (تومان)</string>
+    <string name="field_cost">هزینه</string>
     <string name="field_notes">یادداشت</string>
+    <string name="field_cause">علت / دلیل</string>
+    <string name="field_provider_name">نام تعمیرگاه</string>
+    <string name="field_provider_phone">تلفن تعمیرگاه</string>
     <string name="btn_save">ذخیره</string>
     <string name="btn_cancel">انصراف</string>
     <string name="btn_delete">حذف</string>
+    <string name="btn_edit">ویرایش</string>
 
+    <!-- Reports Screen -->
     <string name="reports_title">تاریخچه سرویس</string>
     <string name="reports_no_records">هنوز سابقه سرویسی وجود ندارد</string>
     <string name="reports_total_cost">هزینه کل</string>
     <string name="reports_total_services">تعداد سرویس‌ها</string>
     <string name="reports_filter_all">همه</string>
-    <string name="reports_filter_oil">روغن</string>
-    <string name="reports_filter_tires">لاستیک</string>
-    <string name="reports_filter_brakes">ترمز</string>
+    <string name="reports_next">بعدی</string>
 
+    <!-- Settings Screen -->
     <string name="settings_title">تنظیمات</string>
     <string name="settings_language">زبان</string>
     <string name="settings_language_en">English</string>
-    <string name="settings_language_de">Deutsch</string>
     <string name="settings_language_fa">فارسی</string>
     <string name="settings_notifications">اعلان‌ها</string>
     <string name="settings_notify_enabled">فعال‌سازی یادآوری‌ها</string>
@@ -63,37 +92,36 @@
     <string name="settings_about">درباره</string>
     <string name="settings_version">نسخه ۱.۵.۰</string>
     <string name="settings_theme">پوسته</string>
-    <string name="settings_theme_system">مطابق سیستم</string>
+    <string name="settings_theme_system">سیستم</string>
     <string name="settings_theme_light">روشن</string>
     <string name="settings_theme_dark">تیره</string>
     <string name="settings_currency">واحد پول</string>
     <string name="settings_distance">واحد مسافت</string>
 
+    <!-- Notifications -->
     <string name="notification_title">سرویس به زودی سررسید می‌شود!</string>
     <string name="notification_body">%1$s نیاز به سرویس %2$s دارد</string>
 
+    <!-- Errors -->
     <string name="error_required_field">این فیلد الزامی است</string>
     <string name="error_invalid_year">سال معتبر وارد کنید</string>
-    <string name="error_invalid_mileage">کیلومتر معتبر وارد کنید</string>
-    <string name="service_gearbox_oil">تعویض روغن گیربکس</string>
-    <string name="service_car_repair">تعمیر خودرو</string>
-    <string name="field_cause">علت / دلیل</string>
-    <string name="field_provider_name">نام تعمیرگاه</string>
-    <string name="field_provider_phone">تلفن تعمیرگاه</string>
-    <string name="field_add_photo">افزودن عکس</string>
-    <string name="field_change_photo">تغییر عکس</string>
-    <string name="field_car_photo">عکس خودرو</string>
+    <string name="error_invalid_mileage">کارکرد معتبر وارد کنید</string>
+
+    <!-- PDF -->
     <string name="export_pdf">خروجی PDF</string>
-    <string name="export_pdf_success">PDF در Downloads ذخیره شد</string>
+    <string name="export_pdf_success">PDF در پوشه Downloads ذخیره شد</string>
     <string name="export_pdf_error">خطا در ایجاد PDF</string>
     <string name="pdf_report_title">گزارش تاریخچه سرویس خودرو</string>
     <string name="pdf_generated_on">تاریخ گزارش</string>
 
+    <!-- Delete confirmations -->
     <string name="delete_car_title">حذف خودرو</string>
     <string name="delete_car_confirm">این خودرو و تمام سوابق سرویس آن حذف خواهند شد. مطمئنید؟</string>
     <string name="delete_service_title">حذف سرویس</string>
     <string name="delete_service_confirm">آیا از حذف این سرویس مطمئنید؟</string>
 
-    <string name="btn_edit">ویرایش</string>
-    <string name="edit_car_title">ویرایش خودرو</string>
+    <!-- Legacy (kept for photo fields still stored in DB) -->
+    <string name="field_add_photo">افزودن عکس</string>
+    <string name="field_change_photo">تغییر عکس</string>
+    <string name="field_car_photo">عکس خودرو</string>
 </resources>

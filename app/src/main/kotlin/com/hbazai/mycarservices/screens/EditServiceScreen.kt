@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hbazai.mycarservices.R
+import com.hbazai.mycarservices.ui.ServiceCatalog
 import com.hbazai.mycarservices.ui.theme.OnPrimary
 import com.hbazai.mycarservices.ui.theme.PrimaryYellow
 import com.hbazai.mycarservices.util.AppPreferences
@@ -54,12 +55,12 @@ fun EditServiceScreen(
                     Text(
                         stringResource(R.string.edit_service_title),
                         fontWeight = FontWeight.Bold,
-                        color      = PrimaryYellow
+                        color      = MaterialTheme.colorScheme.primary
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = PrimaryYellow)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = MaterialTheme.colorScheme.primary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -72,7 +73,7 @@ fun EditServiceScreen(
 
         if (service == null) {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = PrimaryYellow)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
             return@Scaffold
         }
@@ -94,10 +95,14 @@ fun EditServiceScreen(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(stringResource(R.string.field_service_type), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(service.serviceType, color = PrimaryYellow, fontWeight = FontWeight.Bold)
+                    Icon(
+                        ServiceCatalog.iconFor(service.serviceType), null,
+                        tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp)
+                    )
+                    Text(service.serviceType, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -131,7 +136,7 @@ fun EditServiceScreen(
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
 
-            Text("Service Provider", fontWeight = FontWeight.Bold, color = PrimaryYellow, style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(R.string.section_provider), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleSmall)
 
             CarTextField(
                 value         = providerName,

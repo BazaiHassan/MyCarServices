@@ -5,19 +5,29 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hbazai.mycarservices.R
@@ -26,6 +36,7 @@ import com.hbazai.mycarservices.data.local.entity.ServiceRecordEntity
 import com.hbazai.mycarservices.ui.theme.*
 import com.hbazai.mycarservices.util.AppPreferences
 import com.hbazai.mycarservices.util.DateFormatter
+import com.hbazai.mycarservices.util.ltr
 import com.hbazai.mycarservices.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,15 +62,15 @@ fun HomeScreen(
                     Text(
                         text       = stringResource(R.string.home_title),
                         fontWeight = FontWeight.Bold,
-                        color      = PrimaryYellow
+                        color      = MaterialTheme.colorScheme.primary
                     )
                 },
                 actions = {
                     IconButton(onClick = onViewReports) {
-                        Icon(Icons.Default.List, null, tint = PrimaryYellow)
+                        Icon(Icons.Default.History, stringResource(R.string.nav_reports), tint = MaterialTheme.colorScheme.primary)
                     }
                     IconButton(onClick = onSettings) {
-                        Icon(Icons.Default.Settings, null, tint = PrimaryYellow)
+                        Icon(Icons.Default.Settings, stringResource(R.string.nav_settings), tint = MaterialTheme.colorScheme.primary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -68,13 +79,13 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick        = onAddCar,
                 containerColor = PrimaryYellow,
-                contentColor   = OnPrimary
-            ) {
-                Icon(Icons.Default.Add, contentDescription = null)
-            }
+                contentColor   = OnPrimary,
+                icon           = { Icon(Icons.Default.Add, null) },
+                text           = { Text(stringResource(R.string.home_add_car), fontWeight = FontWeight.Bold) }
+            )
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
@@ -109,23 +120,43 @@ fun EmptyHomeState(onAddCar: () -> Unit, modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier            = Modifier.padding(32.dp)
         ) {
-            Text("🚗", style = MaterialTheme.typography.headlineLarge)
+            Box(
+                modifier = Modifier
+                    .size(112.dp)
+                    .background(PrimaryYellow.copy(alpha = 0.15f), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Default.DirectionsCar, null,
+                    tint     = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(64.dp)
+                )
+            }
             Text(
                 stringResource(R.string.home_no_cars),
-                style = MaterialTheme.typography.bodyLarge,
+                style      = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color      = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                stringResource(R.string.home_no_cars_hint),
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Button(
                 onClick = onAddCar,
+                shape   = RoundedCornerShape(16.dp),
                 colors  = ButtonDefaults.buttonColors(
                     containerColor = PrimaryYellow, contentColor = OnPrimary
-                )
+                ),
+                modifier = Modifier.height(52.dp)
             ) {
                 Icon(Icons.Default.Add, null)
                 Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.home_add_car), fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.home_add_car), fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
         }
     }
@@ -167,7 +198,7 @@ fun CarCard(
             onDismissRequest = { showDeleteConfirm = false },
             containerColor   = MaterialTheme.colorScheme.surface,
             title = {
-                Text(stringResource(R.string.delete_car_title), color = PrimaryYellow)
+                Text(stringResource(R.string.delete_car_title), color = MaterialTheme.colorScheme.primary)
             },
             text = { Text(stringResource(R.string.delete_car_confirm)) },
             confirmButton = {
@@ -185,7 +216,7 @@ fun CarCard(
 
     Card(
         modifier  = Modifier.fillMaxWidth().clickable { onCarClick() },
-        shape     = RoundedCornerShape(16.dp),
+        shape     = RoundedCornerShape(20.dp),
         colors    = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -193,22 +224,39 @@ fun CarCard(
 
             // ── Header ────────────────────────────────
             Row(
-                modifier              = Modifier.fillMaxWidth(),
-                verticalAlignment     = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier          = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Box(
+                    modifier = Modifier
+                        .size(52.dp)
+                        .background(PrimaryYellow, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.DirectionsCar, null,
+                        tint     = OnPrimary,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+                Spacer(Modifier.width(12.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         car.name,
                         style      = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color      = PrimaryYellow
+                        color      = MaterialTheme.colorScheme.onSurface
                     )
-                    Text(
-                        "${car.model} · ${car.year}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    val subtitle = listOf(car.model, car.year.takeIf { it > 0 }?.toString().orEmpty())
+                        .filter { it.isNotBlank() }
+                        .joinToString(" · ")
+                    if (subtitle.isNotBlank()) {
+                        Text(
+                            subtitle,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                     if (car.licensePlate.isNotBlank()) {
                         Text(
                             car.licensePlate,
@@ -217,38 +265,36 @@ fun CarCard(
                         )
                     }
                 }
-                OutlinedButton(
-                    onClick  = onEditCar,
-                    modifier = Modifier.weight(0.5f),
-                    border   = androidx.compose.foundation.BorderStroke(1.dp, PrimaryYellow),
-                    colors   = ButtonDefaults.outlinedButtonColors(contentColor = PrimaryYellow)
-                ) {
-                    Icon(Icons.Default.Edit, null, modifier = Modifier.size(16.dp))
-                    Spacer(Modifier.width(2.dp))
-                    Text(stringResource(R.string.btn_edit))
-                }
+                StatusPill(text = statusText, color = statusColor)
             }
 
-            Spacer(Modifier.height(12.dp))
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceVariant)
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(14.dp))
 
             // ── Stats ─────────────────────────────────
             Row(
-                modifier              = Modifier.fillMaxWidth(),
+                modifier              = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        RoundedCornerShape(14.dp)
+                    )
+                    .padding(vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 StatItem(
+                    icon  = Icons.Default.Speed,
                     label = stringResource(R.string.home_mileage),
-                    value = "${car.currentMileage} $distanceUnit"
+                    value = ltr("${car.currentMileage} $distanceUnit")
                 )
                 StatItem(
+                    icon  = Icons.Default.History,
                     label = stringResource(R.string.home_last_service),
                     value = latestService?.let {
                         DateFormatter.formatShort(context, it.serviceDate)
                     } ?: "—"
                 )
                 StatItem(
+                    icon       = Icons.Default.Event,
                     label      = stringResource(R.string.home_next_service),
                     value      = latestService?.let {
                         DateFormatter.formatShort(context, it.nextServiceDate)
@@ -259,31 +305,30 @@ fun CarCard(
 
             Spacer(Modifier.height(12.dp))
 
-            // ── Action buttons ────────────────────────
+            // ── Actions ───────────────────────────────
             Row(
-                modifier              = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                modifier          = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedButton(
+                Button(
                     onClick  = onAddService,
-                    modifier = Modifier.weight(1f),
-                    border   = androidx.compose.foundation.BorderStroke(1.dp, PrimaryYellow),
-                    colors   = ButtonDefaults.outlinedButtonColors(contentColor = PrimaryYellow)
+                    modifier = Modifier.weight(1f).height(46.dp),
+                    shape    = RoundedCornerShape(14.dp),
+                    colors   = ButtonDefaults.buttonColors(
+                        containerColor = PrimaryYellow,
+                        contentColor   = OnPrimary
+                    )
                 ) {
-                    Icon(Icons.Default.Build, null, modifier = Modifier.size(16.dp))
-                    Spacer(Modifier.width(4.dp))
-                    Text(stringResource(R.string.nav_add_service))
+                    Icon(Icons.Default.Build, null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.home_log_service), fontWeight = FontWeight.Bold)
                 }
-
-                OutlinedButton(
-                    onClick  = { showDeleteConfirm = true },
-                    modifier = Modifier.weight(1f),
-                    border   = androidx.compose.foundation.BorderStroke(1.dp, StatusOverdue),
-                    colors   = ButtonDefaults.outlinedButtonColors(contentColor = StatusOverdue)
-                ) {
-                    Icon(Icons.Default.Delete, null, modifier = Modifier.size(16.dp))
-                    Spacer(Modifier.width(4.dp))
-                    Text(stringResource(R.string.btn_delete))
+                Spacer(Modifier.width(8.dp))
+                IconButton(onClick = onEditCar) {
+                    Icon(Icons.Default.Edit, stringResource(R.string.btn_edit), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                IconButton(onClick = { showDeleteConfirm = true }) {
+                    Icon(Icons.Default.Delete, stringResource(R.string.btn_delete), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -291,18 +336,34 @@ fun CarCard(
 }
 
 @Composable
+fun StatusPill(text: String, color: Color) {
+    Text(
+        text       = text,
+        color      = color,
+        fontSize   = 11.sp,
+        fontWeight = FontWeight.Bold,
+        modifier   = Modifier
+            .background(color.copy(alpha = 0.15f), RoundedCornerShape(20.dp))
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+    )
+}
+
+@Composable
 fun StatItem(
+    icon: ImageVector,
     label: String,
     value: String,
-    valueColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface
+    valueColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.height(4.dp))
         Text(
             label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(2.dp))
         Text(
             value,
             style      = MaterialTheme.typography.bodyMedium,

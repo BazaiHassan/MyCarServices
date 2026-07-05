@@ -10,6 +10,14 @@ object LocaleHelper {
     private const val PREFS_NAME = "car_service_prefs"
     private const val KEY_LANG   = "selected_language"
 
+    const val DEFAULT_LANGUAGE = "fa"
+
+    /** Supported language codes paired with their display names. */
+    val supportedLanguages = listOf(
+        "fa" to "فارسی",
+        "en" to "English"
+    )
+
     fun setLocale(context: Context, languageCode: String): Context {
         saveLanguage(context, languageCode)
         return updateResources(context, languageCode)
@@ -18,7 +26,7 @@ object LocaleHelper {
     fun getSavedLanguage(context: Context): String {
         val prefs: SharedPreferences =
             context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getString(KEY_LANG, "en") ?: "en"
+        return prefs.getString(KEY_LANG, DEFAULT_LANGUAGE) ?: DEFAULT_LANGUAGE
     }
 
     private fun saveLanguage(context: Context, languageCode: String) {
@@ -33,11 +41,5 @@ object LocaleHelper {
         config.setLocale(locale)
         config.setLayoutDirection(locale)
         return context.createConfigurationContext(config)
-    }
-
-    fun getLanguageCode(displayName: String): String = when (displayName) {
-        "Deutsch" -> "de"
-        "فارسی"   -> "fa"
-        else      -> "en"
     }
 }

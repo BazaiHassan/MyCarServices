@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(onSplashFinished: () -> Unit) {
 
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(1000)
         onSplashFinished()
     }
 
@@ -75,7 +75,7 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
 
                 // ── Tagline ──────────────────────────
                 Text(
-                    text = "Track · Maintain · Drive Safe",
+                    text = stringResource(R.string.splash_tagline),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center

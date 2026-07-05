@@ -23,7 +23,8 @@ object JalaliCalendar {
         val gm = cal.get(Calendar.MONTH) + 1
         val gd = cal.get(Calendar.DAY_OF_MONTH)
         val (jy, jm, jd) = toJalali(gy, gm, gd)
-        return "$jd/$jm/$jy"
+        // Year-first so the date reads left-to-right: 1404/04/12
+        return "$jy/${jm.toString().padStart(2, '0')}/${jd.toString().padStart(2, '0')}"
     }
 
     private fun toJalali(gy: Int, gm: Int, gd: Int): Triple<Int, Int, Int> {

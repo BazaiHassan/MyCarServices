@@ -16,7 +16,7 @@ object DateFormatter {
 
     fun formatShort(context: Context, epochMillis: Long): String {
         return if (LocaleHelper.getSavedLanguage(context) == "fa") {
-            JalaliCalendar.formatShort(epochMillis)
+            ltr(JalaliCalendar.formatShort(epochMillis))
         } else {
             SimpleDateFormat("dd MMM yy", Locale.getDefault()).format(Date(epochMillis))
         }

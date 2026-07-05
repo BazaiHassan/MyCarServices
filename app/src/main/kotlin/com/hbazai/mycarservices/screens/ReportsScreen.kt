@@ -1,6 +1,7 @@
 package com.hbazai.mycarservices.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -23,9 +24,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hbazai.mycarservices.R
 import com.hbazai.mycarservices.data.local.entity.ServiceRecordEntity
+import com.hbazai.mycarservices.ui.ServiceCatalog
 import com.hbazai.mycarservices.ui.theme.*
 import com.hbazai.mycarservices.util.AppPreferences
 import com.hbazai.mycarservices.util.DateFormatter
+import com.hbazai.mycarservices.util.ltr
 import com.hbazai.mycarservices.viewmodel.ReportViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,11 +72,11 @@ fun ReportsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(stringResource(R.string.reports_title), fontWeight = FontWeight.Bold, color = PrimaryYellow)
+                    Text(stringResource(R.string.reports_title), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = PrimaryYellow)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = MaterialTheme.colorScheme.primary)
                     }
                 },
                 actions = {
@@ -82,7 +85,7 @@ fun ReportsScreen(
                             val car = cars.find { it.id == selectedCarId }
                             if (car != null) viewModel.exportPdf(context, car)
                         }) {
-                            Icon(Icons.Default.PictureAsPdf, null, tint = PrimaryYellow)
+                            Icon(Icons.Default.PictureAsPdf, null, tint = MaterialTheme.colorScheme.primary)
                         }
                     }
                 },
@@ -202,7 +205,7 @@ fun SummaryCard(label: String, value: String, modifier: Modifier = Modifier) {
             modifier            = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = PrimaryYellow)
+            Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
@@ -225,7 +228,7 @@ fun ServiceHistoryCard(
         AlertDialog(
             onDismissRequest = { showConfirm = false },
             containerColor   = MaterialTheme.colorScheme.surface,
-            title = { Text(stringResource(R.string.delete_service_title), color = PrimaryYellow) },
+            title = { Text(stringResource(R.string.delete_service_title), color = MaterialTheme.colorScheme.primary) },
             text  = { Text(stringResource(R.string.delete_service_confirm)) },
             confirmButton = {
                 TextButton(onClick = { showConfirm = false; onDeleteService() }) {
@@ -242,10 +245,27 @@ fun ServiceHistoryCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape    = RoundedCornerShape(12.dp),
+        shape    = RoundedCornerShape(16.dp),
         colors   = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Row(
+            modifier          = Modifier.padding(14.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(46.dp)
+                    .background(PrimaryYellow.copy(alpha = 0.15f), RoundedCornerShape(14.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    ServiceCatalog.iconFor(service.serviceType), null,
+                    tint     = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(26.dp)
+                )
+            }
+            Spacer(Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
 
             Row(
                 modifier              = Modifier.fillMaxWidth(),
@@ -255,12 +275,12 @@ fun ServiceHistoryCard(
                 Text(
                     service.serviceType,
                     fontWeight = FontWeight.Bold,
-                    color      = PrimaryYellow,
+                    color      = MaterialTheme.colorScheme.onSurface,
                     modifier   = Modifier.weight(1f)
                 )
                 Row {
                     IconButton(onClick = onEditService, modifier = Modifier.size(28.dp)) {
-                        Icon(Icons.Default.Edit, null, tint = PrimaryYellow, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Edit, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                     }
                     Spacer(Modifier.width(4.dp))
                     IconButton(onClick = { showConfirm = true }, modifier = Modifier.size(28.dp)) {
@@ -270,9 +290,9 @@ fun ServiceHistoryCard(
             }
 
             Spacer(Modifier.height(6.dp))
-            Text("$dateStr · ${service.mileageAtService} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("Next: $nextDateStr · ${service.nextServiceMileage} $distanceUnit", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(AppPreferences.formatCost(context, service.cost), style = MaterialTheme.typography.bodySmall, color = PrimaryYellow, fontWeight = FontWeight.SemiBold)
+            Text("$dateStr · ${ltr("${service.mileageAtService} $distanceUnit")}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("${stringResource(R.string.reports_next)}: $nextDateStr · ${ltr("${service.nextServiceMileage} $distanceUnit")}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(AppPreferences.formatCost(context, service.cost), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
 
             if (service.cause.isNotBlank()) {
                 Spacer(Modifier.height(4.dp))
@@ -286,6 +306,7 @@ fun ServiceHistoryCard(
             }
             if (service.notes.isNotBlank()) {
                 Text(service.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
             }
         }
     }

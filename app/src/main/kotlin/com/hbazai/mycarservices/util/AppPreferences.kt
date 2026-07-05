@@ -41,11 +41,11 @@ object AppPreferences {
         return if (currency in noDecimalCurrencies) {
             // Round to Int, format with thousands separator
             val formatted = String.format("%,d", amount.toLong())
-            "$formatted $currency"
+            "${ltr(formatted)} $currency"
         } else {
             // Keep 2 decimals, format with thousands separator
             val formatted = String.format("%,.2f", amount)
-            "$currency $formatted"
+            ltr("$currency $formatted")
         }
     }
 }

@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 // ── Primary Yellow/Black palette ──────────────────────
 val PrimaryYellow     = Color(0xFFFFD600)
 val PrimaryYellowDark = Color(0xFFFFC200)
+// Accent for text/icons on light backgrounds — yellow fails contrast there.
+val PrimaryGoldOnLight = Color(0xFF6D5D00)
 val OnPrimary         = Color(0xFF1A1A1A)
 
 val BackgroundDark    = Color(0xFF121212)

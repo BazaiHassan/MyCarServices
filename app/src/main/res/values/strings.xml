@@ -2,6 +2,7 @@
 <resources>
     <!-- App -->
     <string name="app_name">My Car Services</string>
+    <string name="splash_tagline">Track · Maintain · Drive Safe</string>
 
     <!-- Bottom Nav -->
     <string name="nav_home">Home</string>
@@ -9,9 +10,16 @@
     <string name="nav_reports">Reports</string>
     <string name="nav_settings">Settings</string>
 
+    <!-- Setup Screen -->
+    <string name="setup_title">Quick Setup</string>
+    <string name="setup_subtitle">Three quick choices — you can change them later in Settings.</string>
+    <string name="setup_language">Language</string>
+    <string name="setup_start">Get Started</string>
+
     <!-- Home Screen -->
     <string name="home_title">My Cars</string>
     <string name="home_no_cars">No cars added yet</string>
+    <string name="home_no_cars_hint">Add your car and log a service in seconds</string>
     <string name="home_add_car">Add Your Car</string>
     <string name="home_next_service">Next Service</string>
     <string name="home_last_service">Last Service</string>
@@ -19,6 +27,8 @@
     <string name="home_due_soon">Due Soon</string>
     <string name="home_overdue">Overdue</string>
     <string name="home_ok">OK</string>
+    <string name="home_log_service">Log Service</string>
+    <string name="home_history">History</string>
 
     <!-- Service Types -->
     <string name="service_oil_change">Oil Change</string>
@@ -27,26 +37,41 @@
     <string name="service_air_filter">Air Filter</string>
     <string name="service_custom">Custom Service</string>
     <string name="service_timing_belt">Timing Belt Change</string>
+    <string name="service_gearbox_oil">Gearbox Oil Change</string>
+    <string name="service_car_repair">Car Repair</string>
 
     <!-- Add Service Screen -->
     <string name="add_service_title">Add Service</string>
     <string name="edit_service_title">Edit Service</string>
+    <string name="add_service_select_hint">Tap one or more services</string>
+    <string name="selected_services">Selected services</string>
+    <string name="field_cost_optional">Cost (optional)</string>
+    <string name="more_details">More details (optional)</string>
+    <string name="section_provider">Service Provider</string>
+    <string name="error_select_service">Select at least one service</string>
+
+    <!-- Add / Edit Car Screen -->
     <string name="add_car_title">Add Car</string>
+    <string name="edit_car_title">Edit Car</string>
     <string name="field_car_name">Car Name</string>
-    <string name="field_car_model">Model</string>
-    <string name="field_car_year">Year</string>
-    <string name="field_license_plate">License Plate</string>
-    <string name="field_current_mileage">Current Mileage (km)</string>
+    <string name="field_car_model">Model (optional)</string>
+    <string name="field_car_year">Year (optional)</string>
+    <string name="field_license_plate">License Plate (optional)</string>
+    <string name="field_current_mileage">Current Mileage</string>
     <string name="field_service_type">Service Type</string>
     <string name="field_service_date">Service Date</string>
-    <string name="field_mileage_at_service">Mileage at Service (km)</string>
-    <string name="field_next_service_mileage">Next Service Mileage (km)</string>
+    <string name="field_mileage_at_service">Mileage at Service</string>
+    <string name="field_next_service_mileage">Next Service Mileage</string>
     <string name="field_next_service_date">Next Service Date</string>
-    <string name="field_cost">Cost (€)</string>
+    <string name="field_cost">Cost</string>
     <string name="field_notes">Notes</string>
+    <string name="field_cause">Cause / Reason</string>
+    <string name="field_provider_name">Service Provider Name</string>
+    <string name="field_provider_phone">Service Provider Phone</string>
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_delete">Delete</string>
+    <string name="btn_edit">Edit</string>
 
     <!-- Reports Screen -->
     <string name="reports_title">Service History</string>
@@ -54,15 +79,12 @@
     <string name="reports_total_cost">Total Cost</string>
     <string name="reports_total_services">Total Services</string>
     <string name="reports_filter_all">All</string>
-    <string name="reports_filter_oil">Oil</string>
-    <string name="reports_filter_tires">Tires</string>
-    <string name="reports_filter_brakes">Brakes</string>
+    <string name="reports_next">Next</string>
 
     <!-- Settings Screen -->
     <string name="settings_title">Settings</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_en">English</string>
-    <string name="settings_language_de">Deutsch</string>
     <string name="settings_language_fa">فارسی</string>
     <string name="settings_notifications">Notifications</string>
     <string name="settings_notify_enabled">Enable Reminders</string>
@@ -70,7 +92,7 @@
     <string name="settings_about">About</string>
     <string name="settings_version">Version 1.5.0</string>
     <string name="settings_theme">Theme</string>
-    <string name="settings_theme_system">Follow System</string>
+    <string name="settings_theme_system">System</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_currency">Currency</string>
@@ -85,18 +107,6 @@
     <string name="error_invalid_year">Enter a valid year</string>
     <string name="error_invalid_mileage">Enter a valid mileage</string>
 
-    <!-- New service types -->
-    <string name="service_gearbox_oil">Gearbox Oil Change</string>
-    <string name="service_car_repair">Car Repair</string>
-
-    <!-- New fields -->
-    <string name="field_cause">Cause / Reason</string>
-    <string name="field_provider_name">Service Provider Name</string>
-    <string name="field_provider_phone">Service Provider Phone</string>
-    <string name="field_add_photo">Add Photo</string>
-    <string name="field_change_photo">Change Photo</string>
-    <string name="field_car_photo">Car Photo</string>
-
     <!-- PDF -->
     <string name="export_pdf">Export PDF Report</string>
     <string name="export_pdf_success">PDF saved to Downloads</string>
@@ -104,11 +114,14 @@
     <string name="pdf_report_title">Car Service History Report</string>
     <string name="pdf_generated_on">Generated on</string>
 
+    <!-- Delete confirmations -->
     <string name="delete_car_title">Delete Car</string>
     <string name="delete_car_confirm">This will delete the car and all its service records. Are you sure?</string>
     <string name="delete_service_title">Delete Service</string>
     <string name="delete_service_confirm">Are you sure you want to delete this service record?</string>
 
-    <string name="btn_edit">Edit</string>
-    <string name="edit_car_title">Edit Car</string>
+    <!-- Legacy (kept for photo fields still stored in DB) -->
+    <string name="field_add_photo">Add Photo</string>
+    <string name="field_change_photo">Change Photo</string>
+    <string name="field_car_photo">Car Photo</string>
 </resources>
