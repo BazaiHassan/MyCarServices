@@ -28,6 +28,9 @@ sealed class Screen(val route: String) {
     object EditService : Screen("edit_service/{serviceId}") {
         fun createRoute(serviceId: Int) = "edit_service/$serviceId"
     }
+    object OilPrediction : Screen("oil_prediction/{carId}") {
+        fun createRoute(carId: Int) = "oil_prediction/$carId"
+    }
 }
 
 @Composable
@@ -72,7 +75,8 @@ fun NavGraph(navController: NavHostController) {
                 onCarClick    = { carId -> navController.navigate(Screen.Reports.createRoute(carId)) },
                 onEditCar     = { carId -> navController.navigate(Screen.EditCar.createRoute(carId)) },
                 onViewReports = { navController.navigate(Screen.Reports.createRoute()) },
-                onSettings    = { navController.navigate(Screen.Settings.route) }
+                onSettings    = { navController.navigate(Screen.Settings.route) },
+                onPredict     = { carId -> navController.navigate(Screen.OilPrediction.createRoute(carId)) }
             )
         }
 
@@ -128,6 +132,13 @@ fun NavGraph(navController: NavHostController) {
                     navController.navigate(Screen.EditService.createRoute(serviceId))
                 }
             )
+        }
+
+        composable(
+            route     = Screen.OilPrediction.route,
+            arguments = listOf(navArgument("carId") { type = NavType.IntType })
+        ) {
+            OilPredictionScreen(onBack = { navController.popBackStack() })
         }
 
         composable(Screen.Settings.route) {

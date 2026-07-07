@@ -6,6 +6,7 @@ import com.hbazai.mycarservices.data.local.entity.CarEntity
 import com.hbazai.mycarservices.data.local.entity.ServiceRecordEntity
 import com.hbazai.mycarservices.data.repository.CarRepository
 import com.hbazai.mycarservices.data.repository.ServiceRepository
+import com.hbazai.mycarservices.util.TrustedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,7 +55,7 @@ class ServiceViewModel @Inject constructor(
         providerPhone: String = ""
     ) {
         viewModelScope.launch {
-            val now = System.currentTimeMillis()
+            val now = TrustedTime.now()
             services.forEach { (serviceType, cost) ->
                 serviceRepository.insertService(
                     ServiceRecordEntity(

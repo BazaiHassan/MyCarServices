@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DirectionsCar
@@ -48,6 +49,7 @@ fun HomeScreen(
     onEditCar: (Int) -> Unit,
     onViewReports: () -> Unit,
     onSettings: () -> Unit,
+    onPredict: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context        = LocalContext.current
@@ -106,7 +108,8 @@ fun HomeScreen(
                         onCarClick    = { onCarClick(car.id) },
                         onAddService  = { onAddService(car.id) },
                         onEditCar     = { onEditCar(car.id) },
-                        onDeleteCar   = { viewModel.deleteCar(car) }
+                        onDeleteCar   = { viewModel.deleteCar(car) },
+                        onPredict     = { onPredict(car.id) }
                     )
                 }
                 item { Spacer(Modifier.height(80.dp)) }
@@ -170,15 +173,20 @@ fun CarCard(
     onCarClick: () -> Unit,
     onAddService: () -> Unit,
     onEditCar: () -> Unit,
-    onDeleteCar: () -> Unit
+    onDeleteCar: () -> Unit,
+    onPredict: () -> Unit
 ) {
     val context   = LocalContext.current
     val now       = System.currentTimeMillis()
     val sevenDays = 7 * 24 * 60 * 60 * 1000L
+    val dueSoonKm = 500
 
-    val isOverdue = latestService != null && latestService.nextServiceDate < now
-    val isDueSoon = latestService != null &&
-            latestService.nextServiceDate in now..(now + sevenDays)
+    val isOverdue = latestService != null &&
+            (latestService.nextServiceDate < now ||
+             car.currentMileage >= latestService.nextServiceMileage)
+    val isDueSoon = !isOverdue && latestService != null &&
+            (latestService.nextServiceDate in now..(now + sevenDays) ||
+             latestService.nextServiceMileage - car.currentMileage in 0..dueSoonKm)
 
     val statusColor = when {
         isOverdue -> StatusOverdue
@@ -297,7 +305,7 @@ fun CarCard(
                     icon       = Icons.Default.Event,
                     label      = stringResource(R.string.home_next_service),
                     value      = latestService?.let {
-                        DateFormatter.formatShort(context, it.nextServiceDate)
+                        ltr("${it.nextServiceMileage} $distanceUnit")
                     } ?: "—",
                     valueColor = statusColor
                 )
@@ -324,6 +332,13 @@ fun CarCard(
                     Text(stringResource(R.string.home_log_service), fontWeight = FontWeight.Bold)
                 }
                 Spacer(Modifier.width(8.dp))
+                IconButton(onClick = onPredict) {
+                    Icon(
+                        Icons.Default.AutoAwesome,
+                        stringResource(R.string.predict_title),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
                 IconButton(onClick = onEditCar) {
                     Icon(Icons.Default.Edit, stringResource(R.string.btn_edit), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }

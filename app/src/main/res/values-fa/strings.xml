@@ -90,13 +90,32 @@
     <string name="settings_notify_enabled">فعال‌سازی یادآوری‌ها</string>
     <string name="settings_notify_days_before">روزهای قبل از سررسید</string>
     <string name="settings_about">درباره</string>
-    <string name="settings_version">نسخه ۱.۵.۰</string>
+    <string name="settings_version">نسخه ۱.۶.۰</string>
     <string name="settings_theme">پوسته</string>
     <string name="settings_theme_system">سیستم</string>
     <string name="settings_theme_light">روشن</string>
     <string name="settings_theme_dark">تیره</string>
     <string name="settings_currency">واحد پول</string>
     <string name="settings_distance">واحد مسافت</string>
+
+    <!-- AI Prediction -->
+    <string name="predict_title">پیش‌بینی هوشمند</string>
+    <string name="predict_intro_title">تعویض روغن بعدی را پیش‌بینی کنید</string>
+    <string name="predict_intro_body">یک مدل کوچک یادگیری ماشین همین‌جا روی گوشی شما با سوابق تعویض روغن‌تان آموزش می‌بیند و پیش‌بینی می‌کند تعویض بعدی چه زمانی و در چه کارکردی لازم است.</string>
+    <string name="predict_button">پیش‌بینی با هوش مصنوعی</string>
+    <string name="predict_training">در حال آموزش مدل روی دستگاه شما…</string>
+    <string name="predict_not_enough">برای پیش‌بینی حداقل %1$d سابقه تعویض روغن لازم است. اکنون %2$d سابقه دارید.</string>
+    <string name="predict_ai_badge">پیش‌بینی هوش مصنوعی</string>
+    <string name="predict_next_oil_change">تعویض روغن بعدی</string>
+    <string name="predict_at_mileage">در کارکرد</string>
+    <string name="predict_on_date">حدود تاریخ</string>
+    <string name="predict_remaining">حدود %1$s و %2$d روز مانده.</string>
+    <string name="predict_overdue">به نظر می‌رسد موعد تعویض روغن گذشته است!</string>
+    <string name="predict_confidence">اطمینان مدل</string>
+    <string name="predict_chart_title">روند تعویض روغن</string>
+    <string name="predict_legend_history">سوابق</string>
+    <string name="predict_legend_predicted">پیش‌بینی هوش مصنوعی</string>
+    <string name="predict_disclaimer">این پیش‌بینی توسط هوش مصنوعی و با آموزش روی %1$d بازه سرویس روی دستگاه شما انجام شده است. نیاز واقعی ممکن است متفاوت باشد.</string>
 
     <!-- Notifications -->
     <string name="notification_title">سرویس به زودی سررسید می‌شود!</string>
