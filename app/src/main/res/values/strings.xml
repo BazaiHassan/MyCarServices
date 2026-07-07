@@ -69,6 +69,10 @@
     <string name="field_provider_name">Service Provider Name</string>
     <string name="field_provider_phone">Service Provider Phone</string>
     <string name="btn_save">Save</string>
+    <string name="btn_ok">OK</string>
+    <string name="date_day">Day</string>
+    <string name="date_month">Month</string>
+    <string name="date_year">Year</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_edit">Edit</string>

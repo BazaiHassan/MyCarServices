@@ -63,6 +63,8 @@ fun AddServiceScreen(
 
     var mileage          by remember { mutableStateOf("") }
     var nextMileage      by remember { mutableStateOf("") }
+    var serviceDate      by remember { mutableStateOf(System.currentTimeMillis()) }
+    var dateEdited       by remember { mutableStateOf(false) }
     var nextEdited       by remember { mutableStateOf(false) }
     var mileagePrefilled by remember { mutableStateOf(false) }
     var showDetails      by remember { mutableStateOf(false) }
@@ -123,7 +125,8 @@ fun AddServiceScreen(
                                 notes              = notes,
                                 cause              = cause,
                                 providerName       = providerName,
-                                providerPhone      = providerPhone
+                                providerPhone      = providerPhone,
+                                serviceDateMillis  = if (dateEdited) serviceDate else null
                             )
                             onBack()
                         }
@@ -270,6 +273,12 @@ fun AddServiceScreen(
                     }
                 }
             }
+
+            // ── Service date (defaults to today, editable for past services) ──
+            ServiceDateField(
+                valueMillis  = serviceDate,
+                onDateChange = { serviceDate = it; dateEdited = true }
+            )
 
             // ── Mileage (prefilled) ───────────────────
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

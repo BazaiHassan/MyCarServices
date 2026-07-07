@@ -52,10 +52,12 @@ class ServiceViewModel @Inject constructor(
         notes: String = "",
         cause: String = "",
         providerName: String = "",
-        providerPhone: String = ""
+        providerPhone: String = "",
+        serviceDateMillis: Long? = null
     ) {
         viewModelScope.launch {
-            val now = TrustedTime.now()
+            // Explicit date (past service) wins; otherwise network time with device fallback.
+            val now = serviceDateMillis ?: TrustedTime.now()
             services.forEach { (serviceType, cost) ->
                 serviceRepository.insertService(
                     ServiceRecordEntity(

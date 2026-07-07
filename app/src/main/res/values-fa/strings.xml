@@ -69,6 +69,10 @@
     <string name="field_provider_name">نام تعمیرگاه</string>
     <string name="field_provider_phone">تلفن تعمیرگاه</string>
     <string name="btn_save">ذخیره</string>
+    <string name="btn_ok">تأیید</string>
+    <string name="date_day">روز</string>
+    <string name="date_month">ماه</string>
+    <string name="date_year">سال</string>
     <string name="btn_cancel">انصراف</string>
     <string name="btn_delete">حذف</string>
     <string name="btn_edit">ویرایش</string>

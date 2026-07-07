@@ -38,6 +38,7 @@ fun EditServiceScreen(
     val allServices by viewModel.allServices.collectAsStateWithLifecycle()
     val service     = allServices.find { it.id == serviceId }
 
+    var serviceDate      by remember(service) { mutableStateOf(service?.serviceDate ?: System.currentTimeMillis()) }
     var mileageAtService by remember(service) { mutableStateOf(service?.mileageAtService?.toString() ?: "") }
     var nextMileage      by remember(service) { mutableStateOf(service?.nextServiceMileage?.toString() ?: "") }
     var cost             by remember(service) { mutableStateOf(service?.cost?.toString() ?: "") }
@@ -106,6 +107,11 @@ fun EditServiceScreen(
                 }
             }
 
+            ServiceDateField(
+                valueMillis  = serviceDate,
+                onDateChange = { serviceDate = it }
+            )
+
             if (service.cause.isNotBlank() || service.serviceType.contains("Repair", ignoreCase = true)) {
                 CarTextField(cause, { cause = it }, stringResource(R.string.field_cause))
             }
@@ -166,6 +172,7 @@ fun EditServiceScreen(
                     if (!mileageError && !nextMileageError) {
                         viewModel.updateService(
                             service.copy(
+                                serviceDate        = serviceDate,
                                 mileageAtService   = mileageAtService.toInt(),
                                 nextServiceMileage = nextMileage.toInt(),
                                 cost               = cost.toDoubleOrNull() ?: service.cost,
